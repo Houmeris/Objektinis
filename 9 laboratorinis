@@ -1,4 +1,82 @@
- for (int i = 0; i < kiekis; i++)
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace M.D_9_laboratorinis_5_uzduotis
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        class Taibe
+        {
+            public int dydis, kiekis;
+            public string[] p, p2, p3, pard, pard2, pard3;
+            public Taibe(int n)
+            {
+                kiekis = 0;
+                p = new string[dydis = n];
+                p2 = new string[dydis];
+                p3 = new string[dydis];
+                pard = new string[dydis];
+                pard2 = new string[dydis];
+                pard3 = new string[dydis];
+            }
+            public void papildyk(string x, Label label4, string z, string c)
+            {
+                try
+                {
+                    p[kiekis] = x;
+                    p2[kiekis] = z;
+                    p3[kiekis] = c;
+                    kiekis++;
+                }
+                catch
+                {
+                    label4.Text = "Aibe perpildita";
+                }
+            }
+            public void Rodyk(DataGridView lentele, Label label5)
+            {
+                label5.Text = "Prekes";
+                lentele.Rows.Clear();
+                pard = p.Distinct().ToArray();
+                pard2 = p2.Distinct().ToArray();
+                pard3 = p3.Distinct().ToArray();
+                string[][] o = new string[kiekis][];
+                for (int i=0; i<kiekis; i++)
+                {
+                    o[i] = new string[3];
+                }
+                try
+                {
+                    /*for (int i=0; i<kiekis; i++)
+                    {
+                        o[i][2] = p[i];
+                        o[i][1] = p2[i];
+                        o[i][0] = p3[i];
+                        lentele.Rows.Add(o[i]);
+                    }*/
+                
+                }
+                catch
+                {
+                    lentele.Rows.Add("Klaida");
+                }
+                try
+                {
+
+                    for (int i = 0; i < kiekis; i++)
                     {
                         if (pard[i] == pard2[i] && pard2[i] == pard3[i] && pard[i] == pard3[i])
                         {
@@ -15,7 +93,7 @@
                             o[i][1] = pard2[i];
                             lentele.Rows.Add(o[i]);
                         }
-                        if (pard[i] == pard3[i] && pard[i] != pard2[i] && pard[i] != string.Empty)
+                        if (pard[i] == pard3[i] && pard[i] != pard2[i] && pard3[i] != string.Empty)
                         {
                             o[i][1] = pard[i];
                             lentele.Rows.Add(o[i]);
@@ -37,3 +115,26 @@
                         }
 
                     }
+
+                }
+                catch
+                {
+                    label5.Text = "Per daug pridejote ta pati";
+                }
+                lentele.Sort(lentele.Columns["Column1"], ListSortDirection.Descending);
+                /*lentele.Sort(lentele.Columns["Column2"], ListSortDirection.Descending);
+                lentele.Sort(lentele.Columns["Column3"], ListSortDirection.Descending);*/
+            }
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+        Taibe x = new Taibe(20);
+        private void button4_Click(object sender, EventArgs e)
+        {
+            x.papildyk(textBox1.Text, label4, textBox2.Text, textBox3.Text) ;
+            x.Rodyk(dataGridView1, label5);
+        }
+    }
+}
