@@ -1,0 +1,39 @@
+ for (int i = 0; i < kiekis; i++)
+                    {
+                        if (pard[i] == pard2[i] && pard2[i] == pard3[i] && pard[i] == pard3[i])
+                        {
+                            o[i][0] = pard[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+                        if (pard[i] == pard2[i] && pard[i] != pard3[i] && pard[i] != string.Empty)
+                        {
+                            o[i][1] = pard[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+                        if (pard2[i] == pard3[i] && pard2[i] != pard[i] && pard2[i] != string.Empty)
+                        {
+                            o[i][1] = pard2[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+                        if (pard[i] == pard3[i] && pard[i] != pard2[i] && pard[i] != string.Empty)
+                        {
+                            o[i][1] = pard[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+                        if (pard[i] != pard2[i] && pard[i] != pard3[i] && pard[i] != string.Empty)
+                        {
+                            o[i][2] = pard[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+                        if (pard2[i] != pard[i] && pard2[i] != pard3[i] && pard2[i] != string.Empty)
+                        {
+                            o[i][2] = pard2[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+                        if (pard3[i] != pard2[i] && pard3[i] != pard[i] && pard3[i] != string.Empty)
+                        {
+                            o[i][2] = pard3[i];
+                            lentele.Rows.Add(o[i]);
+                        }
+
+                    }
