@@ -54,24 +54,10 @@ namespace M.D_9_laboratorinis_5_uzduotis
                 pard2 = p2.Distinct().ToArray();
                 pard3 = p3.Distinct().ToArray();
                 string[][] o = new string[kiekis][];
+                int n = 0;
                 for (int i=0; i<kiekis; i++)
                 {
                     o[i] = new string[3];
-                }
-                try
-                {
-                    /*for (int i=0; i<kiekis; i++)
-                    {
-                        o[i][2] = p[i];
-                        o[i][1] = p2[i];
-                        o[i][0] = p3[i];
-                        lentele.Rows.Add(o[i]);
-                    }*/
-                
-                }
-                catch
-                {
-                    lentele.Rows.Add("Klaida");
                 }
                 try
                 {
@@ -82,48 +68,97 @@ namespace M.D_9_laboratorinis_5_uzduotis
                         {
                             o[i][0] = pard[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
                         if (pard[i] == pard2[i] && pard[i] != pard3[i] && pard[i] != string.Empty)
                         {
                             o[i][1] = pard[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
                         if (pard2[i] == pard3[i] && pard2[i] != pard[i] && pard2[i] != string.Empty)
                         {
                             o[i][1] = pard2[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
                         if (pard[i] == pard3[i] && pard[i] != pard2[i] && pard3[i] != string.Empty)
                         {
                             o[i][1] = pard[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
                         if (pard[i] != pard2[i] && pard[i] != pard3[i] && pard[i] != string.Empty)
                         {
                             o[i][2] = pard[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
                         if (pard2[i] != pard[i] && pard2[i] != pard3[i] && pard2[i] != string.Empty)
                         {
                             o[i][2] = pard2[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
                         if (pard3[i] != pard2[i] && pard3[i] != pard[i] && pard3[i] != string.Empty)
                         {
                             o[i][2] = pard3[i];
                             lentele.Rows.Add(o[i]);
+                            n++;
                         }
-
                     }
 
                 }
                 catch
                 {
-                    label5.Text = "Per daug pridejote ta pati";
+                    label5.Text = "Klaida! per daug pridejote tos pacios prekes";
                 }
-                lentele.Sort(lentele.Columns["Column1"], ListSortDirection.Descending);
-                /*lentele.Sort(lentele.Columns["Column2"], ListSortDirection.Descending);
-                lentele.Sort(lentele.Columns["Column3"], ListSortDirection.Descending);*/
+                List<string> po = new List<string>();
+                List<string> po2 = new List<string>();
+                List<string> po3 = new List<string>();
+
+                foreach (DataGridViewRow row in lentele.Rows)
+                    {
+                    if (row.Cells["Column1"].Value != null)
+                        po.Add(row.Cells["Column1"].Value.ToString());
+                    else
+                        po.Add(" ");
+                    if (row.Cells["Column2"].Value != null)
+                        po2.Add(row.Cells["Column2"].Value.ToString());
+                    else
+                        po2.Add(" ");
+                    if (row.Cells["Column3"].Value != null)
+                        po3.Add(row.Cells["Column3"].Value.ToString());
+                    else
+                        po3.Add(" ");
+                    }
+                lentele.Rows.Clear();
+                po = po.OrderByDescending(c => c).ToList();
+                po2 = po2.OrderByDescending(c => c).ToList();
+                po3 = po3.OrderByDescending(c => c).ToList();
+                for (int i=0; i<n; i++)
+                {
+                    lentele.Rows.Add(po[i], po2[i], po3[i]);
+                }
+                string remove = lentele.Rows[0].Cells[1].Value.ToString();
+                for (int i=1; i<lentele.Rows.Count; i++)
+                {
+                    if(lentele.Rows[i].Cells[1].Value.ToString() == remove)
+                    {
+                        lentele.Rows[i].Cells[1].Value = " ";
+                    }
+                    else
+                    {
+                        remove = lentele.Rows[i].Cells[1].Value.ToString();
+                    }
+                }
+                for(int i=0; i<lentele.Rows.Count; i++)
+                {
+                    if(string.IsNullOrWhiteSpace(lentele.Rows[i].Cells[0].Value.ToString()) && string.IsNullOrWhiteSpace(lentele.Rows[i].Cells[1].Value.ToString()) && string.IsNullOrWhiteSpace(lentele.Rows[i].Cells[2].Value.ToString()))
+                    {
+                        lentele.Rows.RemoveAt(i);
+                    }
+                }
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -136,5 +171,6 @@ namespace M.D_9_laboratorinis_5_uzduotis
             x.papildyk(textBox1.Text, label4, textBox2.Text, textBox3.Text) ;
             x.Rodyk(dataGridView1, label5);
         }
+
     }
 }
